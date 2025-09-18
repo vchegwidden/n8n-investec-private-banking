@@ -1,0 +1,20 @@
+{
+	"node": "n8n-nodes-base.InvestecAuth",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": [
+		"Miscellaneous"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developer.investec.com/za/api-products/documentation/SA_PB_Account_Information#section/Authentication"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": ""
+			}
+		]
+	}
+}
