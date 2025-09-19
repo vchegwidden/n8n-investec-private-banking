@@ -1,14 +1,12 @@
 // import { URLSearchParams } from 'url';
-import {
-	IAuthenticateGeneric,
-	ICredentialType,
-	INodeProperties,
-} from 'n8n-workflow';
+import { IAuthenticateGeneric, ICredentialType, INodeProperties } from 'n8n-workflow';
 
+// https://docs.n8n.io/integrations/creating-nodes/build/reference/credentials-files/
 export class InvestecPrivateBankingApi implements ICredentialType {
-	name = 'investecPbApi';
+	name = 'investecPrivateBankingApi';
 	displayName = 'Investec Private Banking API';
-	documentationUrl = 'https://developer.investec.com/za/api-products/documentation/SA_PB_Account_Information#section/Authentication';
+	documentationUrl =
+		'https://developer.investec.com/za/api-products/documentation/SA_PB_Account_Information#section/Authentication';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'Client ID',
@@ -31,7 +29,7 @@ export class InvestecPrivateBankingApi implements ICredentialType {
 				password: true,
 			},
 			default: '',
-		}
+		},
 	];
 
 	// This allows the credential to be used by other parts of n8n
@@ -43,13 +41,10 @@ export class InvestecPrivateBankingApi implements ICredentialType {
 		properties: {
 			headers: {
 				'x-api-key': '={{$credentials.apiKey}}',
-                application: 'x-www-form-urlencoded',
 			},
-			body: {
-				grant_type: 'client_credentials',
-				client_id: '={{$credentials.clientId}}',
-				client_secret: '={{$credentials.clientSecret}}',
-				// scope: 'read write',
+			auth: {
+				username: '={{$credentials.clientId}}',
+				password: '={{$credentials.clientSecret}}',
 			},
 		},
 	};

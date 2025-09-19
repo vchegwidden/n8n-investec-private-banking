@@ -36,7 +36,8 @@
       "dist/credentials/InvestecPrivateBankingApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/Auth/InvestecAuth.node.js"
+      "dist/nodes/Auth/InvestecAuth.node.js",
+      "dist/nodes/Accounts/InvestecAccounts.node.js"
     ]
   },
   "devDependencies": {
