@@ -117,6 +117,34 @@ export async function getAccountTransactions(
 	}
 }
 
+export async function getProfileAccounts(
+	executeFunction: IExecuteFunctions,
+	baseUrl: String,
+	token: String,
+	resource: String,
+	itemIndex: number,
+): Promise<any> {
+	let responseData;
+
+	try {
+		const profileId = executeFunction.getNodeParameter('profileId', itemIndex) as string;
+
+		const options: IRequestOptions = {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			url: `${baseUrl}/${resource}/${profileId}/accounts`,
+			json: true,
+		};
+		responseData = await executeFunction.helpers.request.call(executeFunction, options);
+		return responseData;
+	} catch (error) {
+		handleError(executeFunction, error);
+	}
+}
+
 function handleError(executeFunction: IExecuteFunctions, error: any) {
 	if (error.httpCode === '400') {
 		const resource = executeFunction.getNodeParameter('resource', 0) as string;

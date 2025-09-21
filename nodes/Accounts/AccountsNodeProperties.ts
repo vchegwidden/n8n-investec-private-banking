@@ -137,6 +137,20 @@ export const accountFields: INodeProperties[] = [
 		default: '',
 		description: 'The bank account ID',
 	},
+    {
+		displayName: 'Profile ID',
+		name: 'profileId',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['profiles'],
+				operation: ['getProfileAccounts'],
+			},
+		},
+		default: '',
+		description: 'The user profile ID',
+	},
 	{
 		displayName: 'Transaction Filter Fields',
 		name: 'additionalFields',

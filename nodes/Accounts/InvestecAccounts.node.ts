@@ -9,7 +9,7 @@ import {
 } from 'n8n-workflow';
 
 import { accountResources, accountOperations, accountFields } from './AccountsNodeProperties';
-import { accountsRequest, getAccountInfoRequest, getAccountTransactions } from './AccountFunctions';
+import { accountsRequest, getAccountInfoRequest, getAccountTransactions, getProfileAccounts } from './AccountFunctions';
 
 export class InvestecAccounts implements INodeType {
 	description: INodeTypeDescription = {
@@ -64,10 +64,7 @@ export class InvestecAccounts implements INodeType {
 					returnData.push(await getAccountInfoRequest(this, baseUrl, token, resource, i, 'pending-transactions'));
 					break;
 				case 'getProfileAccounts':
-					throw new NodeOperationError(
-						this.getNode(),
-						`Not yet implemented!`,
-					);
+					returnData.push(await getProfileAccounts(this, baseUrl, token, resource, i));
 					break;
 				default:
 					throw new NodeOperationError(
