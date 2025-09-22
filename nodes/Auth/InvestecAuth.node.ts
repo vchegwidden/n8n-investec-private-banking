@@ -3,12 +3,11 @@ import {
 	type INodeExecutionData,
 	type INodeType,
 	type INodeTypeDescription,
-	type IRequestOptions,
 	NodeConnectionType,
-	NodeApiError,
-	JsonObject,
 	// LoggerProxy as Logger,
 } from 'n8n-workflow';
+
+import { getAuthToken } from './AuthFunctions';
 
 export class InvestecAuth implements INodeType {
 	description: INodeTypeDescription = {
@@ -35,7 +34,7 @@ export class InvestecAuth implements INodeType {
 			// Resources
 			{
 				displayName: 'Base URL',
-				name: 'resource',
+				name: 'baseUrl',
 				type: 'options',
 				options: [
 					{
@@ -61,53 +60,11 @@ export class InvestecAuth implements INodeType {
 		const items = this.getInputData();
 		let responseData;
 		const returnData = [];
-		const resource = this.getNodeParameter('resource', 0) as string;
-		// const operation = this.getNodeParameter('operation', 0) as string;
+		const baseUrl = this.getNodeParameter('baseUrl', 0) as string;
 
-		// For each item, make an API call to create a contact
 		for (let i = 0; i < items.length; i++) {
-			// if (operation === 'get') {
-				try {
-					const options: IRequestOptions = {
-						method: 'POST',
-						headers: {
-							Accept: 'application/json',
-						},
-						form: {
-							grant_type: 'client_credentials',
-						},
-						url: resource,
-						json: true,
-					};
-
-					// Logger.info(`Value for url is "${resource}"`)
-					// Logger.info(`Calling investec auth endpoint for workflow with url "${options.url}"`);
-					responseData = await this.helpers.requestWithAuthentication.call(
-						this,
-						'investecPrivateBankingApi',
-						options,
-					);
-					returnData.push(responseData);
-				} catch (error) {
-					if (error.httpCode === '404') {
-						const resource = this.getNodeParameter('resource', 0) as string;
-						const errorOptions = {
-							message: `${resource} not found`,
-							description:
-								'The requested resource could not be found. Please check your input parameters.',
-						};
-						throw new NodeApiError(this.getNode(), error as JsonObject, errorOptions);
-					}
-
-					if (error.httpCode === '401') {
-						throw new NodeApiError(this.getNode(), error as JsonObject, {
-							message: 'Authentication failed',
-							description: 'Please check your credentials and try again.',
-						});
-					}
-					throw new NodeApiError(this.getNode(), error as JsonObject);
-				}
-			// }
+			responseData = await getAuthToken(this, baseUrl);
+			returnData.push(responseData);
 		}
 		// Map data to n8n data structure
 		return [this.helpers.returnJsonArray(returnData)];
