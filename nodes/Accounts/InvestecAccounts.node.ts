@@ -9,7 +9,7 @@ import {
 } from 'n8n-workflow';
 
 import { accountResources, accountOperations, accountFields } from './AccountsNodeProperties';
-import { accountsRequest, getAccountInfoRequest, getAccountTransactions, getProfileAccounts } from './AccountFunctions';
+import { accountsRequest, getAccountInfoRequest, getAccountTransactions, getAuthorisationSetupDetails, getProfileAccounts, getProfileBeneficiaries } from './AccountFunctions';
 
 export class InvestecAccounts implements INodeType {
 	description: INodeTypeDescription = {
@@ -65,6 +65,12 @@ export class InvestecAccounts implements INodeType {
 					break;
 				case 'getProfileAccounts':
 					returnData.push(await getProfileAccounts(this, baseUrl, token, resource, i));
+					break;
+				case 'getAuthorisationSetupDetails':
+					returnData.push(await getAuthorisationSetupDetails(this, baseUrl, token, resource, i));
+					break;
+				case 'getProfileBeneficiaries':
+					returnData.push(await getProfileBeneficiaries(this, baseUrl, token, resource, i));
 					break;
 				default:
 					throw new NodeOperationError(

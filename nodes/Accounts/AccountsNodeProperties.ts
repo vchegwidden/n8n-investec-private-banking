@@ -84,7 +84,7 @@ export const accountOperations: INodeProperties[] = [
 				description: 'Obtain a specified accounts transactions',
 				action: 'Get account transactions',
 			},
-            {
+			{
 				name: 'Account Pending Transactions',
 				value: 'getPendingTransactions',
 				description: 'Obtain a specified accounts pending transactions',
@@ -110,11 +110,23 @@ export const accountOperations: INodeProperties[] = [
 				description: 'List all the profiles consented to',
 				action: 'List all profiles consented to',
 			},
-            {
+			{
 				name: 'Profile Accounts',
 				value: 'getProfileAccounts',
 				description: 'List all the accounts for the profile specified',
 				action: 'List all profiles accounts',
+			},
+			{
+				name: 'Authorisation Setup Details',
+				value: 'getAuthorisationSetupDetails',
+				description: 'List the authorisation setup details for the specified profile and accounts.',
+				action: 'List authorisation setup details',
+			},
+			{
+				name: 'Profile Beneficiaries',
+				value: 'getProfileBeneficiaries',
+				description: 'List all the beneficiaries available for the profile and account specified.',
+				action: 'List all available beneficiaries',
 			},
 		],
 		default: 'getProfiles',
@@ -130,14 +142,14 @@ export const accountFields: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				resource: ['accounts'],
-				operation: ['getBalance', 'getTransactions'],
+				resource: ['accounts', 'profiles'],
+				operation: ['getBalance', 'getTransactions', 'getAuthorisationSetupDetails', 'getProfileBeneficiaries'],
 			},
 		},
 		default: '',
 		description: 'The bank account ID',
 	},
-    {
+	{
 		displayName: 'Profile ID',
 		name: 'profileId',
 		type: 'string',
@@ -145,7 +157,7 @@ export const accountFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['profiles'],
-				operation: ['getProfileAccounts'],
+				operation: ['getProfileAccounts', 'getAuthorisationSetupDetails', 'getProfileBeneficiaries'],
 			},
 		},
 		default: '',
@@ -169,7 +181,7 @@ export const accountFields: INodeProperties[] = [
 				name: 'fromDate',
 				type: 'dateTime',
 				default: '',
-                hint: 'The date from which to start the transaction search',
+				hint: 'The date from which to start the transaction search',
 
 			},
 			{
@@ -177,7 +189,7 @@ export const accountFields: INodeProperties[] = [
 				name: 'toDate',
 				type: 'dateTime',
 				default: '',
-                hint: 'The date at which to end the transaction search',
+				hint: 'The date at which to end the transaction search',
 			},
 			{
 				displayName: 'Transaction Type',

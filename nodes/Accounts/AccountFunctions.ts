@@ -43,7 +43,7 @@ export async function getAccountInfoRequest(
 	token: String,
 	resource: String,
 	itemIndex: number,
-    requestType: AccountInfoTypes,
+	requestType: AccountInfoTypes,
 ): Promise<any> {
 	let responseData;
 
@@ -136,6 +136,66 @@ export async function getProfileAccounts(
 				Authorization: `Bearer ${token}`,
 			},
 			url: `${baseUrl}/${resource}/${profileId}/accounts`,
+			json: true,
+		};
+		responseData = await executeFunction.helpers.request.call(executeFunction, options);
+		return responseData;
+	} catch (error) {
+		handleError(executeFunction, error);
+	}
+}
+
+export async function getAuthorisationSetupDetails(
+	executeFunction: IExecuteFunctions,
+	baseUrl: String,
+	token: String,
+	resource: String,
+	itemIndex: number,
+): Promise<any> {
+	let responseData;
+
+	try {
+		const profileId = executeFunction.getNodeParameter('profileId', itemIndex) as string;
+		const accountId = executeFunction.getNodeParameter('accountId', itemIndex) as string;
+
+		const options: IRequestOptions = {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			// https://openapi.investec.com/za/pb/v1/profiles/{profileid}/accounts/{accountid}/authorisationsetupdetails
+			url: `${baseUrl}/${resource}/${profileId}/accounts/${accountId}/authorisationsetupdetails`,
+			json: true,
+		};
+		responseData = await executeFunction.helpers.request.call(executeFunction, options);
+		return responseData;
+	} catch (error) {
+		handleError(executeFunction, error);
+	}
+}
+
+export async function getProfileBeneficiaries(
+	executeFunction: IExecuteFunctions,
+	baseUrl: String,
+	token: String,
+	resource: String,
+	itemIndex: number,
+): Promise<any> {
+	let responseData;
+
+	try {
+		const profileId = executeFunction.getNodeParameter('profileId', itemIndex) as string;
+		const accountId = executeFunction.getNodeParameter('accountId', itemIndex) as string;
+
+		const options: IRequestOptions = {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			// https://openapi.investec.com/za/pb/v1/profiles/{profileid}/accounts/{accountid}/beneficiaries
+			url: `${baseUrl}/${resource}/${profileId}/accounts/${accountId}/beneficiaries`,
 			json: true,
 		};
 		responseData = await executeFunction.helpers.request.call(executeFunction, options);
