@@ -8,8 +8,9 @@ import {
 	// LoggerProxy as Logger,
 } from 'n8n-workflow';
 
-import { accountResources, accountOperations, accountFields } from './AccountsNodeProperties';
+import { accountResources, accountOperations, accountFields, transferFields } from './AccountsNodeProperties';
 import { accountsRequest, getAccountInfoRequest, getAccountTransactions, getAuthorisationSetupDetails, getProfileAccounts, getProfileBeneficiaries } from './AccountFunctions';
+import { transferMultiple } from './TransferFunctions'
 
 export class InvestecAccounts implements INodeType {
 	description: INodeTypeDescription = {
@@ -26,7 +27,7 @@ export class InvestecAccounts implements INodeType {
 		},
 		inputs: [NodeConnectionType.Main],
 		outputs: [NodeConnectionType.Main],
-		properties: [...accountResources, ...accountOperations, ...accountFields],
+		properties: [...accountResources, ...accountOperations, ...accountFields, ...transferFields],
 	};
 
 	// The execute method will go here
@@ -71,6 +72,9 @@ export class InvestecAccounts implements INodeType {
 					break;
 				case 'getProfileBeneficiaries':
 					returnData.push(await getProfileBeneficiaries(this, baseUrl, token, resource, i));
+					break;
+				case 'transferMultiple':
+					returnData.push(await transferMultiple(this, baseUrl, token, i));
 					break;
 				default:
 					throw new NodeOperationError(

@@ -45,11 +45,15 @@ export const accountResources: INodeProperties[] = [
 				name: 'Profile',
 				value: 'profiles',
 			},
+			{
+				name: 'Transfer',
+				value: 'transfer'
+			}
 		],
 		default: 'accounts',
 		noDataExpression: true,
 		required: true,
-		description: 'Account information',
+		description: 'Personal Account Options',
 	},
 ];
 
@@ -134,6 +138,7 @@ export const accountOperations: INodeProperties[] = [
 	},
 ];
 
+
 export const accountFields: INodeProperties[] = [
 	{
 		displayName: 'Account ID',
@@ -142,8 +147,14 @@ export const accountFields: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				resource: ['accounts', 'profiles'],
-				operation: ['getBalance', 'getTransactions', 'getAuthorisationSetupDetails', 'getProfileBeneficiaries'],
+				resource: ['accounts', 'profiles', 'transfer'],
+				operation: [
+					'getBalance',
+					'getTransactions',
+					'getAuthorisationSetupDetails',
+					'getProfileBeneficiaries',
+					'transferMultiple'
+				],
 			},
 		},
 		default: '',
@@ -156,8 +167,13 @@ export const accountFields: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				resource: ['profiles'],
-				operation: ['getProfileAccounts', 'getAuthorisationSetupDetails', 'getProfileBeneficiaries'],
+				resource: ['profiles', 'transfer'],
+				operation: [
+					'getProfileAccounts',
+					'getAuthorisationSetupDetails',
+					'getProfileBeneficiaries',
+					'transferMultiple'
+				],
 			},
 		},
 		default: '',
@@ -206,3 +222,79 @@ export const accountFields: INodeProperties[] = [
 		],
 	},
 ];
+
+export const transferFields: INodeProperties[] = [
+	{
+		displayName: 'Transfer Operation',
+		name: 'operation',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['transfer'],
+			},
+		},
+		options: [
+			{
+				name: 'Transfer Multiple',
+				value: 'transferMultiple',
+				description: 'Transfer funds to one or multiple accounts.',
+				action: 'Inter account transfers',
+			},
+		],
+		default: 'transferMultiple',
+		noDataExpression: true,
+	},
+	{
+		displayName: 'Transfer List',
+		name: 'additionalFields',
+		type: 'fixedCollection',
+		placeholder: 'Add Transfer Details',
+		typeOptions: {
+			multipleValues: true
+		},
+		default: [],
+		displayOptions: {
+			show: {
+				resource: ['transfer'],
+				operation: ['transferMultiple'],
+			},
+		},
+		options: [
+			{
+				displayName: 'transferList',
+				name: 'transferList',
+				values: [
+					{
+						displayName: 'Beneficiary Account ID',
+						name: 'beneficiaryAccountId',
+						type: 'string',
+						default: '',
+						hint: 'The account ID for the transfer destination',
+					},
+					{
+						displayName: 'Transactions End Date',
+						name: 'amount',
+						type: 'number',
+						default: 0,
+						hint: 'The amount to transfer',
+					},
+					{
+						displayName: 'From Account Reference',
+						name: 'myReference',
+						type: 'string',
+						default: '',
+						hint: "My account reference"
+					},
+					{
+						displayName: 'Beneficiary Account Reference',
+						name: 'theirReference',
+						type: 'string',
+						default: '',
+						hint: 'Their account reference'
+					},
+				]
+			}
+		],
+	},
+];
+
