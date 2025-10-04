@@ -56,7 +56,6 @@ cd ~/.n8n/custom
 npm link n8n-nodes-investec-private-banking
 n8n start
 ```
-y
 
 ## Contributing
 
@@ -73,7 +72,7 @@ TODO - Templates
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=tamtom/StepsShare-oss&type=Date)](https://star-history.com/#yourusername/StepsShare-oss&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=vchegwidden/n8n-investec-private-banking&type=Date)](https://star-history.com/#yourusername/n8n-investec-private-banking&Date)
 
 ---
 
