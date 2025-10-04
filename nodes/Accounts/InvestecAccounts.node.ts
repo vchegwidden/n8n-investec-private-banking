@@ -14,6 +14,7 @@ import {
 	profileOperations,
 	transferOperations,
 	documentOperations,
+	beneficiaryOperations,
 } from './AccountsNodeProperties';
 
 import {
@@ -21,6 +22,7 @@ import {
 	profileFields,
 	transferFields,
 	documentFields,
+	beneficiaryFields,
 } from './AccountNodeFields';
 
 import { 
@@ -30,11 +32,13 @@ import {
 	getAuthorisationSetupDetails, 
 	getProfileAccounts, 
 	getProfileBeneficiaries,
-} from './AccountFunctions';
+} from './functions/AccountFunctions';
 
-import { transferMultiple } from './TransferFunctions'
+import { transferMultiple } from './functions/TransferFunctions';
 
-import { listDocuments, getDocument } from './DocumentFunctions';
+import { getBeneficiaries, getBeneficiaryCategories, payMultiple } from './functions/BeneficiaryFunctions';
+
+import { listDocuments, getDocument } from './functions/DocumentFunctions';
 
 export class InvestecAccounts implements INodeType {
 	description: INodeTypeDescription = {
@@ -56,11 +60,13 @@ export class InvestecAccounts implements INodeType {
 			...accountOperations,
 			...profileOperations,
 			...transferOperations,
-			...documentOperations,	
+			...documentOperations,
+			...beneficiaryOperations,
 			...accountFields,
 			...profileFields,
 			...transferFields,
 			...documentFields,
+			...beneficiaryFields,
 		],
 	};
 
@@ -79,15 +85,27 @@ export class InvestecAccounts implements INodeType {
 			throw new NodeOperationError(this.getNode(), 'Access Token is required');
 		}
 
+		// Get Accounts, Profiles, Beneficiary and BeneficiaryCategories operate on the whole account so we call those outside the loop
+		switch(operation) { 
+			case 'getBeneficiaries':
+				returnData.push(await getBeneficiaries(this, baseUrl, token));
+				return [this.helpers.returnJsonArray(returnData)];
+			case 'getBeneficiaryCategories':
+				returnData.push(await getBeneficiaryCategories(this, baseUrl, token));
+				return [this.helpers.returnJsonArray(returnData)];
+			case 'getAccounts':
+			case 'getProfiles':
+				returnData.push(await accountsRequest(this, baseUrl, token, resource));
+				return [this.helpers.returnJsonArray(returnData)];
+			default:
+				// continue to loop
+				break;
+		}
+
 		// For each item, make an API call to create a contact
+		// items can be for different accounts or different profiles
 		for (let i = 0; i < items.length; i++) {
 			switch (operation) {
-				case 'getAccounts':
-					returnData.push(await accountsRequest(this, baseUrl, token, resource));
-					break;
-				case 'getProfiles':
-					returnData.push(await accountsRequest(this, baseUrl, token, resource));
-					break;
 				case 'getBalance':
 					returnData.push(await getAccountInfoRequest(this, baseUrl, token, resource, i, 'balance'));
 					break;
@@ -108,6 +126,9 @@ export class InvestecAccounts implements INodeType {
 					break;
 				case 'transferMultiple':
 					returnData.push(await transferMultiple(this, baseUrl, token, i));
+					break;
+				case 'payMultiple':
+					returnData.push(await payMultiple(this, baseUrl, token, i));
 					break;
 				case 'listDocuments':
 					returnData.push(await listDocuments(this, baseUrl, token, i));

@@ -12,7 +12,8 @@ export const accountFields: INodeProperties[] = [
 					'accounts',
 					'profiles',
 					'transfer',
-					'documents'
+					'documents',
+					'beneficiary',
 				],
 				operation: [
 					'getBalance',
@@ -22,6 +23,7 @@ export const accountFields: INodeProperties[] = [
 					'transferMultiple',
 					'listDocuments',
 					'getDocument',
+					'payMultiple',
 				],
 			},
 		},
@@ -123,7 +125,7 @@ export const transferFields: INodeProperties[] = [
 						hint: 'The account ID for the transfer destination',
 					},
 					{
-						displayName: 'Transactions End Date',
+						displayName: 'Amount',
 						name: 'amount',
 						type: 'number',
 						default: 0,
@@ -137,7 +139,7 @@ export const transferFields: INodeProperties[] = [
 						hint: "My account reference"
 					},
 					{
-						displayName: 'Beneficiary Account Reference',
+						displayName: 'To Account Reference',
 						name: 'theirReference',
 						type: 'string',
 						default: '',
@@ -206,4 +208,107 @@ export const documentFields: INodeProperties[] = [
 		default: '',
 		description: 'The date at which to end the document search',
 	},
-]
+];
+
+export const beneficiaryFields: INodeProperties[] = [
+	{
+		displayName: 'Payment List',
+		name: 'additionalFields',
+		type: 'fixedCollection',
+		placeholder: 'Add Payment Details',	
+		typeOptions: {
+			multipleValues: true
+		},
+		default: [],
+		displayOptions: {
+			show: {
+				resource: ['beneficiary'],
+				operation: ['payMultiple'],
+			},
+		},
+		options: [
+			{
+				displayName: 'paymentList',
+				name: 'paymentList',
+				values: [
+					{
+						displayName: 'Beneficiary ID',
+						name: 'beneficiaryId',
+						type: 'string',
+						default: '',
+						required: true,
+						hint: 'The beneficairy ID for the payment',
+					},
+					{
+						displayName: 'Amount',
+						name: 'amount',
+						type: 'number',
+						default: 0,
+						required: true,
+						hint: 'The amount to transfer',
+					},
+					{
+						displayName: 'From Account Reference',
+						name: 'myReference',
+						type: 'string',
+						default: '',
+						required: true,
+						hint: "My account reference"
+					},
+					{
+						displayName: 'Beneficiary Account Reference',
+						name: 'theirReference',
+						type: 'string',
+						default: '',
+						required: true,
+						hint: 'Their account reference'
+					},
+					{
+						displayName: 'Additional Payment Fields',
+						name: 'additionalOptionalFields',
+						type: 'collection',
+						placeholder: 'Add Field',
+						default: {},
+						// displayOptions: {
+						// 	show: {
+						// 		resource: ['accounts'],
+						// 		operation: ['getTransactions'],
+						// 	},
+						// },
+						options: [
+							{
+								displayName: 'Authoriser A',
+								name: 'authoriserAId',
+								type: 'string',
+								default: '',
+								hint: 'If the payment requires authorisation this is derived from profiles/{profileid}/accounts/{accountId}/authorisationsetupdetails.',
+
+							},
+							{
+								displayName: 'Authoriser B',
+								name: 'authoriserBId',
+								type: 'string',
+								default: '',
+								hint: 'If the payment requires authorisation this is derived from profiles/{profileid}/accounts/{accountId}/authorisationsetupdetails.',
+							},
+							{
+								displayName: 'Auth Period',
+								name: 'authPeriodId',
+								type: 'string',
+								default: '',
+								hint: 'If the payment requires authorisation this is derived from profiles/{profileid}/accounts/{accountId}/authorisationsetupdetails.',
+							},
+							{
+								displayName: 'Faster Payment',
+								name: 'fasterPayment',
+								type: 'boolean',
+								default: false,
+								hint: 'If the payment requires authorisation this can be set to true if the beneficiary allows it from profiles/{profileid}/beneficiaries/{accountid}.',
+							},
+						],
+					},
+				]
+			}
+		],
+	},
+];

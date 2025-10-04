@@ -52,6 +52,10 @@ export const accountResources: INodeProperties[] = [
 			{
 				name: 'Documents',
 				value: 'documents'
+			},
+			{
+				name: 'Beneficiary',
+				value: 'beneficiary'
 			}
 		],
 		default: 'accounts',
@@ -195,4 +199,39 @@ export const documentOperations: INodeProperties[] = [
 		default: 'listDocuments',
 		noDataExpression: true,
 	},
-]
+];
+
+export const beneficiaryOperations: INodeProperties[] = [
+	{
+		displayName: 'Beneficiary Operation',
+		name: 'operation',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['beneficiary'],
+			},
+		},
+		options: [
+			{
+				name: 'List Beneficiaries',
+				value: 'getBeneficiaries',
+				description: 'List of beneficiaries linked to the profile',
+				action: 'List of beneficiaries',
+			},
+			{
+				name: 'List Beneficiary Categories',
+				value: 'getBeneficiaryCategories',
+				description: 'List all the beneficiary categories available.',
+				action: 'List of beneficiary categories',
+			},
+			{
+				name: 'Pay Multiple',
+				value: 'payMultiple',
+				description: 'Pay funds to one or multiple beneficiaries. This includes payments requiring authorisation.',
+				action: 'Pay multiple beneficiaries',
+			},
+		],
+		default: 'getBeneficiaries',
+		noDataExpression: true,
+	},
+];
