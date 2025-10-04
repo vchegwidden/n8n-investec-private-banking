@@ -8,9 +8,33 @@ import {
 	// LoggerProxy as Logger,
 } from 'n8n-workflow';
 
-import { accountResources, accountOperations, accountFields, transferFields } from './AccountsNodeProperties';
-import { accountsRequest, getAccountInfoRequest, getAccountTransactions, getAuthorisationSetupDetails, getProfileAccounts, getProfileBeneficiaries } from './AccountFunctions';
+import { 
+	accountResources, 
+	accountOperations,
+	profileOperations,
+	transferOperations,
+	documentOperations,
+} from './AccountsNodeProperties';
+
+import {
+	accountFields,
+	profileFields,
+	transferFields,
+	documentFields,
+} from './AccountNodeFields';
+
+import { 
+	accountsRequest, 
+	getAccountInfoRequest, 
+	getAccountTransactions, 
+	getAuthorisationSetupDetails, 
+	getProfileAccounts, 
+	getProfileBeneficiaries,
+} from './AccountFunctions';
+
 import { transferMultiple } from './TransferFunctions'
+
+import { listDocuments, getDocument } from './DocumentFunctions';
 
 export class InvestecAccounts implements INodeType {
 	description: INodeTypeDescription = {
@@ -27,7 +51,17 @@ export class InvestecAccounts implements INodeType {
 		},
 		inputs: [NodeConnectionType.Main],
 		outputs: [NodeConnectionType.Main],
-		properties: [...accountResources, ...accountOperations, ...accountFields, ...transferFields],
+		properties: [
+			...accountResources,
+			...accountOperations,
+			...profileOperations,
+			...transferOperations,
+			...documentOperations,	
+			...accountFields,
+			...profileFields,
+			...transferFields,
+			...documentFields,
+		],
 	};
 
 	// The execute method will go here
@@ -38,7 +72,6 @@ export class InvestecAccounts implements INodeType {
 		const token = this.getNodeParameter('accessToken', 0) as string;
 		const resource = this.getNodeParameter('resource', 0) as string;
 		const operation = this.getNodeParameter('operation', 0) as string;
-		// const profileOperation = this.getNodeParameter('profileOperation', 0) as string;
 
 		const returnData = [];
 
@@ -75,6 +108,12 @@ export class InvestecAccounts implements INodeType {
 					break;
 				case 'transferMultiple':
 					returnData.push(await transferMultiple(this, baseUrl, token, i));
+					break;
+				case 'listDocuments':
+					returnData.push(await listDocuments(this, baseUrl, token, i));
+					break;
+				case 'getDocument':
+					returnData.push(await getDocument(this, baseUrl, token, i));
 					break;
 				default:
 					throw new NodeOperationError(

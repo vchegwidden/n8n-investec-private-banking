@@ -48,6 +48,10 @@ export const accountResources: INodeProperties[] = [
 			{
 				name: 'Transfer',
 				value: 'transfer'
+			},
+			{
+				name: 'Documents',
+				value: 'documents'
 			}
 		],
 		default: 'accounts',
@@ -98,6 +102,9 @@ export const accountOperations: INodeProperties[] = [
 		default: 'getAccounts',
 		noDataExpression: true,
 	},
+];
+
+export const profileOperations: INodeProperties[] = [
 	{
 		displayName: 'Profile Operation',
 		name: 'operation',
@@ -138,92 +145,7 @@ export const accountOperations: INodeProperties[] = [
 	},
 ];
 
-
-export const accountFields: INodeProperties[] = [
-	{
-		displayName: 'Account ID',
-		name: 'accountId',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: ['accounts', 'profiles', 'transfer'],
-				operation: [
-					'getBalance',
-					'getTransactions',
-					'getAuthorisationSetupDetails',
-					'getProfileBeneficiaries',
-					'transferMultiple'
-				],
-			},
-		},
-		default: '',
-		description: 'The bank account ID',
-	},
-	{
-		displayName: 'Profile ID',
-		name: 'profileId',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: ['profiles', 'transfer'],
-				operation: [
-					'getProfileAccounts',
-					'getAuthorisationSetupDetails',
-					'getProfileBeneficiaries',
-					'transferMultiple'
-				],
-			},
-		},
-		default: '',
-		description: 'The user profile ID',
-	},
-	{
-		displayName: 'Transaction Filter Fields',
-		name: 'additionalFields',
-		type: 'collection',
-		placeholder: 'Add Field',
-		default: {},
-		displayOptions: {
-			show: {
-				resource: ['accounts'],
-				operation: ['getTransactions'],
-			},
-		},
-		options: [
-			{
-				displayName: 'Transactions Start Date',
-				name: 'fromDate',
-				type: 'dateTime',
-				default: '',
-				hint: 'The date from which to start the transaction search',
-
-			},
-			{
-				displayName: 'Transactions End Date',
-				name: 'toDate',
-				type: 'dateTime',
-				default: '',
-				hint: 'The date at which to end the transaction search',
-			},
-			{
-				displayName: 'Transaction Type',
-				name: 'transactionType',
-				type: 'string',
-				default: '',
-			},
-			{
-				displayName: 'Include Pending Transactions',
-				name: 'includePending',
-				type: 'boolean',
-				default: false,
-			},
-		],
-	},
-];
-
-export const transferFields: INodeProperties[] = [
+export const transferOperations: INodeProperties[] = [
 	{
 		displayName: 'Transfer Operation',
 		name: 'operation',
@@ -244,57 +166,33 @@ export const transferFields: INodeProperties[] = [
 		default: 'transferMultiple',
 		noDataExpression: true,
 	},
+];
+
+export const documentOperations: INodeProperties[] = [
 	{
-		displayName: 'Transfer List',
-		name: 'additionalFields',
-		type: 'fixedCollection',
-		placeholder: 'Add Transfer Details',
-		typeOptions: {
-			multipleValues: true
-		},
-		default: [],
+		displayName: 'Document Operation',
+		name: 'operation',
+		type: 'options',
 		displayOptions: {
 			show: {
-				resource: ['transfer'],
-				operation: ['transferMultiple'],
+				resource: ['documents'],
 			},
 		},
 		options: [
 			{
-				displayName: 'transferList',
-				name: 'transferList',
-				values: [
-					{
-						displayName: 'Beneficiary Account ID',
-						name: 'beneficiaryAccountId',
-						type: 'string',
-						default: '',
-						hint: 'The account ID for the transfer destination',
-					},
-					{
-						displayName: 'Transactions End Date',
-						name: 'amount',
-						type: 'number',
-						default: 0,
-						hint: 'The amount to transfer',
-					},
-					{
-						displayName: 'From Account Reference',
-						name: 'myReference',
-						type: 'string',
-						default: '',
-						hint: "My account reference"
-					},
-					{
-						displayName: 'Beneficiary Account Reference',
-						name: 'theirReference',
-						type: 'string',
-						default: '',
-						hint: 'Their account reference'
-					},
-				]
-			}
+				name: 'List Documents',
+				value: 'listDocuments',
+				description: 'List all the documents available.',
+				action: 'List all documents',
+			},
+			{
+				name: 'Get Document',
+				value: 'getDocument',
+				description: 'Retrieve the document specified.',
+				action: 'Retreive document',
+			},
 		],
+		default: 'listDocuments',
+		noDataExpression: true,
 	},
-];
-
+]
