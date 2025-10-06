@@ -8,17 +8,17 @@ To learn more about Investec Programmable banking visit https://developer.invest
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
-[Installation](#installation)  
-[Operations](#operations)
-[Credentials](#credentials)
-[Compatibility](#compatibility)
-[Usage](#usage)
-[Resources](#resources)
-[Version history](#version-history)
-[Development](#development)
-[Running Locally](#running-locally)
-[Contributing](#contributing)
-[License](#license)
+[Installation](#installation)<br />
+[Operations](#operations)<br />
+[Credentials](#credentials)<br />
+[Compatibility](#compatibility)<br />
+[Usage](#usage)<br />
+[Resources](#resources)<br />
+[Version history](#version-history)<br />
+[Development](#development)<br />
+[Running Locally](#running-locally)<br />
+[Contributing](#contributing)<br />
+[License](#license)<br />
 
 ## Installation
 
