@@ -75,7 +75,7 @@ export const accountFields: INodeProperties[] = [
 ];
 
 export const profileFields: INodeProperties[] = [
-    {
+	{
 		displayName: 'Profile ID',
 		name: 'profileId',
 		type: 'string',
@@ -164,7 +164,6 @@ export const documentFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The document type',
 	},
 	{
 		displayName: 'Document Date',
@@ -178,7 +177,6 @@ export const documentFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The document date',
 	},
 	{
 		displayName: 'Documents Start Date',
@@ -215,7 +213,7 @@ export const beneficiaryFields: INodeProperties[] = [
 		displayName: 'Payment List',
 		name: 'additionalFields',
 		type: 'fixedCollection',
-		placeholder: 'Add Payment Details',	
+		placeholder: 'Add Payment Details',
 		typeOptions: {
 			multipleValues: true
 		},
@@ -231,38 +229,6 @@ export const beneficiaryFields: INodeProperties[] = [
 				displayName: 'paymentList',
 				name: 'paymentList',
 				values: [
-					{
-						displayName: 'Beneficiary ID',
-						name: 'beneficiaryId',
-						type: 'string',
-						default: '',
-						required: true,
-						hint: 'The beneficairy ID for the payment',
-					},
-					{
-						displayName: 'Amount',
-						name: 'amount',
-						type: 'number',
-						default: 0,
-						required: true,
-						hint: 'The amount to transfer',
-					},
-					{
-						displayName: 'From Account Reference',
-						name: 'myReference',
-						type: 'string',
-						default: '',
-						required: true,
-						hint: "My account reference"
-					},
-					{
-						displayName: 'Beneficiary Account Reference',
-						name: 'theirReference',
-						type: 'string',
-						default: '',
-						required: true,
-						hint: 'Their account reference'
-					},
 					{
 						displayName: 'Additional Payment Fields',
 						name: 'additionalOptionalFields',
@@ -306,6 +272,38 @@ export const beneficiaryFields: INodeProperties[] = [
 								hint: 'If the payment requires authorisation this can be set to true if the beneficiary allows it from profiles/{profileid}/beneficiaries/{accountid}.',
 							},
 						],
+					},
+					{
+						displayName: 'Amount',
+						name: 'amount',
+						type: 'number',
+						default: 0,
+						required: true,
+						hint: 'The amount to transfer',
+					},
+					{
+						displayName: 'Beneficiary Account Reference',
+						name: 'theirReference',
+						type: 'string',
+						default: '',
+						required: true,
+						hint: 'Their account reference'
+					},
+					{
+						displayName: 'Beneficiary ID',
+						name: 'beneficiaryId',
+						type: 'string',
+						default: '',
+						required: true,
+						hint: 'The beneficairy ID for the payment',
+					},
+					{
+						displayName: 'From Account Reference',
+						name: 'myReference',
+						type: 'string',
+						default: '',
+						required: true,
+						hint: "My account reference"
 					},
 				]
 			}

@@ -42,6 +42,14 @@ export const accountResources: INodeProperties[] = [
 				value: 'accounts',
 			},
 			{
+				name: 'Beneficiary',
+				value: 'beneficiary'
+			},
+			{
+				name: 'Document',
+				value: 'documents'
+			},
+			{
 				name: 'Profile',
 				value: 'profiles',
 			},
@@ -49,14 +57,6 @@ export const accountResources: INodeProperties[] = [
 				name: 'Transfer',
 				value: 'transfer'
 			},
-			{
-				name: 'Documents',
-				value: 'documents'
-			},
-			{
-				name: 'Beneficiary',
-				value: 'beneficiary'
-			}
 		],
 		default: 'accounts',
 		noDataExpression: true,
@@ -134,13 +134,13 @@ export const profileOperations: INodeProperties[] = [
 			{
 				name: 'Authorisation Setup Details',
 				value: 'getAuthorisationSetupDetails',
-				description: 'List the authorisation setup details for the specified profile and accounts.',
+				description: 'List the authorisation setup details for the specified profile and accounts',
 				action: 'List authorisation setup details',
 			},
 			{
 				name: 'Profile Beneficiaries',
 				value: 'getProfileBeneficiaries',
-				description: 'List all the beneficiaries available for the profile and account specified.',
+				description: 'List all the beneficiaries available for the profile and account specified',
 				action: 'List all available beneficiaries',
 			},
 		],
@@ -163,7 +163,7 @@ export const transferOperations: INodeProperties[] = [
 			{
 				name: 'Transfer Multiple',
 				value: 'transferMultiple',
-				description: 'Transfer funds to one or multiple accounts.',
+				description: 'Transfer funds to one or multiple accounts',
 				action: 'Inter account transfers',
 			},
 		],
@@ -186,13 +186,13 @@ export const documentOperations: INodeProperties[] = [
 			{
 				name: 'List Documents',
 				value: 'listDocuments',
-				description: 'List all the documents available.',
+				description: 'List all the documents available',
 				action: 'List all documents',
 			},
 			{
 				name: 'Get Document',
 				value: 'getDocument',
-				description: 'Retrieve the document specified.',
+				description: 'Retrieve the document specified',
 				action: 'Retreive document',
 			},
 		],
@@ -221,7 +221,7 @@ export const beneficiaryOperations: INodeProperties[] = [
 			{
 				name: 'List Beneficiary Categories',
 				value: 'getBeneficiaryCategories',
-				description: 'List all the beneficiary categories available.',
+				description: 'List all the beneficiary categories available',
 				action: 'List of beneficiary categories',
 			},
 			{
