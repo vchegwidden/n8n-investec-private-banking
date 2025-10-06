@@ -22,6 +22,7 @@ To learn more about Investec Programmable banking visit https://developer.invest
 
 ## Installation
 
+Package available here: https://www.npmjs.com/package/n8n-nodes-investec-private-banking
 Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
 ## Operations
