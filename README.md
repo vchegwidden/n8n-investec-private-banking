@@ -26,6 +26,9 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ## Operations
 
+### Auth Actions
+1. Get access token
+
 ### Accounts Actions
 1. List all accounts
 2. Get account balance
